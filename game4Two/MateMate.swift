@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+var screen = UIScreen.main.bounds
+
 @main
-struct game4TwoApp: App {
+struct MateMate: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AuthView()
         }
     }
 }
