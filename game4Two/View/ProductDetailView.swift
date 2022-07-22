@@ -10,9 +10,12 @@ import SwiftUI
 struct ProductDetailView: View {
     
     var viewModel: ProductDetailViewModel
+//    var viewModelCart: CartViewModel
     
     @State private var volume = "0.33"
-    @State private var count = 0
+    @State private var count = 1
+    
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         
@@ -53,7 +56,13 @@ struct ProductDetailView: View {
             }.pickerStyle(.segmented).padding()
             
             Button {
-                print("Добавить в корзину")
+        
+                var position = Position(id: UUID().uuidString, product: viewModel.product, count: count)
+                
+                position.product.price = viewModel.getPrice(volume: volume)
+                
+                CartViewModel.shared.addPosition(position)
+                presentationMode.wrappedValue.dismiss()
                 
             } label: {
                 Text("To cart")

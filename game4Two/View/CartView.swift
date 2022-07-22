@@ -9,16 +9,28 @@ import SwiftUI
 
 struct CartView: View {
     
-    var viewModel: CartViewModel
+    @StateObject var viewModel: CartViewModel
     
     var body: some View {
         
         VStack {
             List(viewModel.positions) { position in
-                 PositionCell(position: position)
+                PositionCell(position: position)
+                    .swipeActions(content: {
+                        Button {
+                            viewModel.positions.removeAll { pos in
+                                pos.id == position.id
+                            }
+                        } label: {
+                            Text("Удалить")
+                        }.tint(.red)
+                            
+                        
+                    })
             }
+            
             .listStyle(.plain)
-        .navigationTitle("Корзина")
+            .navigationTitle("Корзина")
             
             HStack {
                 Text("Всего: \(viewModel.positions.count) позиций на")
@@ -38,18 +50,18 @@ struct CartView: View {
                     print("Cansel")
                 } label: {
                     Text("Заказ")
-                        
+                    
                 }
                 .frame(maxWidth: screen.width * 0.38, maxHeight: 60)
                 .background(LinearGradient(colors: [.yellow, .orange], startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(16)
-
-
+                
+                
             }
-//            .aspectRatio()
+            //            .aspectRatio()
             .padding(.horizontal, 35)
-                .padding()
-                .foregroundColor(.black)
+            .padding()
+            .foregroundColor(.black)
         }
         
     }
@@ -57,6 +69,6 @@ struct CartView: View {
 
 struct CartView_Previews: PreviewProvider {
     static var previews: some View {
-        CartView(viewModel: CartViewModel())
+        CartView(viewModel: CartViewModel.shared)
     }
 }

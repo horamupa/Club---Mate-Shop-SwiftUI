@@ -22,7 +22,7 @@ struct MainTabBar: View {
                 }
             
             NavigationView {
-                CartView(viewModel: CartViewModel())
+                CartView(viewModel: CartViewModel.shared)
                 
             }
                 .tabItem {
@@ -39,6 +39,7 @@ struct MainTabBar: View {
                     }
                 }
         }
+        
     }
 }
 
